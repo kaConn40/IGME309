@@ -50,7 +50,7 @@ void Application::Display(void)
 	static uint clock = m_pSystem->GenClock();
 	timer += static_cast<float>(m_pSystem->GetDeltaTime(clock));
 
-	//drawing mesh
+	///drawing mesh
 	int i = 0;
 	static float moveDist = -10.0f;
 	static vector3 v3Position = vector3(moveDist, 0.0f, 0.0f);
