@@ -13,6 +13,9 @@ void Application::InitVariables(void)
 
 	m_pMesh2 = new MyMesh();
 	m_pMesh2->GenerateCube(1.0f, C_YELLOW);
+
+	m_pMesh3 = new MyMesh();
+	m_pMesh3->GenerateCone(1.0f, 2.0f, 6, C_GREEN);
 }
 void Application::Update(void)
 {

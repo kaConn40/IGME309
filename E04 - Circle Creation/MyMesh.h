@@ -6,6 +6,8 @@ Date: 2017/05
 #define __MYMESH_H_
 
 #include "BTX\BTX.h"
+#include <vector>
+using namespace std;
 using namespace BTX;
 
 class MyMesh

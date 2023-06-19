@@ -1,4 +1,5 @@
 #include "MyMesh.h"
+using namespace std;
 void MyMesh::GenerateCube(float a_fSize, vector3 a_v3Color)
 {
 	if (a_fSize < 0.01f)
@@ -61,7 +62,25 @@ void MyMesh::GenerateCone(float a_fRadius, float a_fHeight, int a_nSubdivisions,
 	Init();
 
 	// Replace this with your code
-	GenerateCube(a_fRadius * 2.0f, a_v3Color);
+	vector<vector3> base;
+	vector<vector3> top;
+	GLfloat d = static_cast<GLfloat>(2.0 * PI / static_cast<GLfloat>(a_nSubdivisions));;
+	GLfloat t = 0;
+
+	for (int i = 0; i < a_nSubdivisions; i++)
+	{
+		vector3 bottom = vector3(cos(t) * a_fRadius ,sin(t)*a_fRadius, 0.0f);
+		base.push_back(bottom);
+		t += d;
+		
+	}
+	for (int i = 0; i < a_nSubdivisions; i++)
+	{
+		AddTri(vector3(0.0f), base[(i + 1) % a_nSubdivisions], base[i]);
+		AddTri(base[i],base[(i + 1) % a_nSubdivisions],vector3(0.0f,0.0f,a_fHeight));
+		AddTri(base[i], vector3(0.0f, 0.0f, a_fHeight),base[(i + 1) % a_nSubdivisions]);
+		
+	}
 	// -------------------------------
 
 	// Adding information about color
@@ -83,10 +102,26 @@ void MyMesh::GenerateCylinder(float a_fRadius, float a_fHeight, int a_nSubdivisi
 
 	Release();
 	Init();
+	vector<vector3> top;
+	vector<vector3> bottom;
+	GLfloat d = static_cast<GLfloat>(2.0 * PI / static_cast<GLfloat>(a_nSubdivisions));;
+	GLfloat t = 0;
+	float height = a_fHeight * 0.5f;
+	for (int i = 0; i < a_nSubdivisions; i++)
+	{
+		vector3 temp = vector3(cos(t) * a_fRadius, a_fHeight, sin(t) * a_fRadius);
+		top.push_back(temp);
+		temp.y = 0;
+		bottom.push_back(temp);
+		t += d;
 
-	// Replace this with your code
-	GenerateCube(a_fRadius * 2.0f, a_v3Color);
-	// -------------------------------
+	}
+	for (int i = 0; i < a_nSubdivisions; i++)
+	{
+		AddTri(vector3(0.0f,a_fHeight,0.0f),top[(i + 1) % a_nSubdivisions],top[i]);
+		AddTri(vector3(0.0f),bottom[i], bottom[(i + 1) % a_nSubdivisions]);
+		AddQuad(bottom[(i + 1) % a_nSubdivisions], bottom[i], top[(i + 1) % a_nSubdivisions],top[i]);
+	}
 
 	// Adding information about color
 	CompleteMesh(a_v3Color);
@@ -115,7 +150,39 @@ void MyMesh::GenerateTube(float a_fOuterRadius, float a_fInnerRadius, float a_fH
 	Init();
 
 	// Replace this with your code
-	GenerateCube(a_fOuterRadius * 2.0f, a_v3Color);
+	vector<vector3> outerTop;
+	vector<vector3> outerBottom;
+	vector<vector3> innerTop;
+	vector<vector3> innerBottom;
+	GLfloat d = static_cast<GLfloat>(2.0 * PI / static_cast<GLfloat>(a_nSubdivisions));;
+	GLfloat t = 0;
+	for (int i = 0; i < a_nSubdivisions; i++)
+	{
+		vector3 temp = vector3(cos(t) * a_fOuterRadius, a_fHeight, sin(t) * a_fOuterRadius);
+		outerTop.push_back(temp);
+		temp.y = 0;
+		outerBottom.push_back(temp);
+		temp= vector3(cos(t) * a_fInnerRadius, a_fHeight, sin(t) * a_fInnerRadius);
+		innerTop.push_back(temp);
+		temp.y = 0;
+		innerBottom.push_back(temp);
+		t += d;
+
+
+	}
+
+	for (int i = 0; i < a_nSubdivisions; i++)
+	{
+		AddQuad(outerBottom[(i + 1) % a_nSubdivisions], outerBottom[i], outerTop[(i + 1) % a_nSubdivisions], outerTop[i]); //outer cyclinder
+
+		AddQuad(outerTop[(i + 1) % a_nSubdivisions], outerTop[i], innerTop[(i + 1) % a_nSubdivisions], innerTop[i]);//top rim
+		
+		AddQuad(innerTop[(i + 1) % a_nSubdivisions], innerTop[i], innerBottom[(i + 1) % a_nSubdivisions], innerBottom[i]); //inner cyclinder
+
+		AddQuad(innerBottom[(i + 1) % a_nSubdivisions], innerBottom[i], outerBottom[(i + 1) % a_nSubdivisions], outerBottom[i]);//top rim
+		
+
+	}
 	// -------------------------------
 
 	// Adding information about color
@@ -147,7 +214,26 @@ void MyMesh::GenerateTorus(float a_fOuterRadius, float a_fInnerRadius, int a_nSu
 	Init();
 
 	// Replace this with your code
-	GenerateCube(a_fOuterRadius * 2.0f, a_v3Color);
+	vector<vector3> outerTop;
+	vector<vector3> outerBottom;
+	vector<vector3> innerTop;
+	vector<vector3> innerBottom;
+	GLfloat d = static_cast<GLfloat>(2.0 * PI / static_cast<GLfloat>(a_nSubdivisionsB));;
+	GLfloat t = 0;
+	for (int i = 0; i < a_nSubdivisionsB; i++)
+	{
+		vector3 temp = vector3((a_fOuterRadius+a_fInnerRadius)
+		outerTop.push_back(temp);
+		temp.y = 0;
+		outerBottom.push_back(temp);
+		temp= vector3(cos(t) * a_fInnerRadius, a_fHeight, sin(t) * a_fInnerRadius);
+		innerTop.push_back(temp);
+		temp.y = 0;
+		innerBottom.push_back(temp);
+		t += d;
+
+
+	}
 	// -------------------------------
 
 	// Adding information about color

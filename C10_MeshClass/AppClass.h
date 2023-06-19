@@ -22,6 +22,8 @@ class Application
 {
 	MyMesh* m_pMesh1 = nullptr;
 	MyMesh* m_pMesh2 = nullptr;
+	MyMesh* m_pMesh3 = nullptr;
+	MyMesh* m_pMesh4 = nullptr; 
 private:
 	String m_sProgrammer = "Alberto Bobadilla - labigm@rit.edu";
 	static ImGuiObject gui; //GUI object
