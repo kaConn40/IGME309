@@ -14,16 +14,20 @@ Update: 2021/02
 
 #include "imgui\ImGuiObject.h"
 
+#include <vector>
+
 using namespace BTX;
+using namespace std;
+
 
 #include "MyMesh.h"
 
 class Application
 {
 	uint m_uMeshCount = 10;
-	MyMesh* m_pMesh;
+	vector<MyMesh*> m_pMeshList;
 private:
-	String m_sProgrammer = "Alberto Bobadilla - labigm@rit.edu";
+	String m_sProgrammer = "Magnus Conneely- kc4025@rit.edu";
 	static ImGuiObject gui; //GUI object
 
 	uint m_uRenderCallCount = 0; //count of render calls per frame
