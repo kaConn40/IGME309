@@ -212,34 +212,16 @@ void MyMesh::GenerateTorus(float a_fOuterRadius, float a_fInnerRadius, int a_nSu
 
 	Release();
 	Init();
-
-	// Replace this with your code
-	vector<vector3> outerTop;
-	vector<vector3> outerBottom;
-	vector<vector3> innerTop;
-	vector<vector3> innerBottom;
-	GLfloat d = static_cast<GLfloat>(2.0 * PI / static_cast<GLfloat>(a_nSubdivisionsB));;
-	GLfloat t = 0;
-	for (int i = 0; i < a_nSubdivisionsB; i++)
-	{
-		vector3 temp = vector3((a_fOuterRadius+a_fInnerRadius)
-		outerTop.push_back(temp);
-		temp.y = 0;
-		outerBottom.push_back(temp);
-		temp= vector3(cos(t) * a_fInnerRadius, a_fHeight, sin(t) * a_fInnerRadius);
-		innerTop.push_back(temp);
-		temp.y = 0;
-		innerBottom.push_back(temp);
-		t += d;
-
-
-	}
-	// -------------------------------
-
+	Mesh* pMesh = new Mesh();
+	pMesh->GenerateTorus(a_fOuterRadius, a_fInnerRadius, a_nSubdivisionsA, a_nSubdivisionsB, a_v3Color);
+	m_lVertexPos = pMesh->GetVertexList();
+	m_uVertexCount = m_lVertexPos.size();
+	SafeDelete(pMesh);
+	
 	// Adding information about color
 	CompleteMesh(a_v3Color);
 	CompileOpenGL3X();
-}
+} 
 void MyMesh::GenerateSphere(float a_fRadius, int a_nSubdivisions, vector3 a_v3Color)
 {
 	if (a_fRadius < 0.01f)
@@ -258,9 +240,11 @@ void MyMesh::GenerateSphere(float a_fRadius, int a_nSubdivisions, vector3 a_v3Co
 	Init();
 
 	// Replace this with your code
-	GenerateCube(a_fRadius * 2.0f, a_v3Color);
-	// -------------------------------
-
+	Mesh* pMesh = new Mesh();
+	pMesh->GenerateSphere(a_fRadius, a_nSubdivisions, a_v3Color);
+	m_lVertexPos = pMesh->GetVertexList();
+	m_uVertexCount = m_lVertexPos.size();
+	SafeDelete(pMesh);
 	// Adding information about color
 	CompleteMesh(a_v3Color);
 	CompileOpenGL3X();
